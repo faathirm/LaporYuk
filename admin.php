@@ -1,8 +1,16 @@
 <?php 
+
+    session_start();
+
     include('inc/start_page.php');
     include('inc/header.php');
     include('proses/koneksi.php');
-
+    
+    
+    if(!isset($_SESSION['loggedin'])){
+        echo '<script>window.location.href = "login.php";</script>';
+    }else{
+    
     $per_page = 5;
     $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
     $mulai = ($page>1) ? ($page * $per_page) - $per_page : 0;
@@ -17,13 +25,14 @@
     $tahap2 = mysql_num_rows(mysql_query("SELECT * FROM data_laporan WHERE status='TAHAP 2'"));
     $tahap3 = mysql_num_rows(mysql_query("SELECT * FROM data_laporan WHERE status='TAHAP 3'"));
     $tahap4 = mysql_num_rows(mysql_query("SELECT * FROM data_laporan WHERE status='TAHAP 4'"));
+    $ditolak = mysql_num_rows(mysql_query("SELECT * FROM data_laporan WHERE status='DITOLAK'"));
 ?>
     <div class="page-banner"></div>
     <div class="page-breadcrumb container-fluid no-padding">
 			<div class="container">
 				<ol class="breadcrumb">
 					<li><a href="index.php" title="Home">Home</a></li>
-					<li><a href="login.php">Login</a></li>
+					<li><a href="admin.php">Admin</a></li>
 				</ol>
 			</div>
 		</div><!-- Breadcrumb /- -->
@@ -52,10 +61,12 @@
                                 ?>
                                 <tr>
                                     <th scope="row"><?php echo $no++; ?></th>
-                                    <td><a href=""><?php echo $data['nopol'];?></a></td>
+                                    <td><a href="detail.php?id=<?php echo $data['id'];?>"><?php echo $data['nopol'];?></a></td>
                                     <td><?php echo $data['tanggaldilaporkan'];?></td>
                                     <td><?php if($data['status'] == "TAHAP 4"){ ?>
                                             <label class="label label-success">TAHAP 4</label><?php
+                                        }else if($data['status'] == "DITOLAK"){ ?>
+                                            <label class="label label-danger">DITOLAK</label><?php
                                         }else{
                                             echo $data['status'];     
                                         }
@@ -91,6 +102,8 @@
                                             <li><?php echo $tahap2;?>  Laporan Tahap 2</li>
                                             <li><?php echo $tahap3;?>  Laporan Tahap 3</li>
                                             <li><?php echo $tahap4;?>  Laporan Tahap 4</li>
+                                            <li><?php echo $ditolak;?>  Laporan Di Tolak</li>
+                                            <li><a class="label label-danger" href="proses/logout.php">LOGOUT</a></li>
                                         </ul>
                                     </div>
                                     <div class="shape"></div>
@@ -106,7 +119,8 @@
         
 	</main>
 
-<?php 
+<?php
+    }
     include('inc/footer.php');
     include('inc/page_end.php');     
 ?>

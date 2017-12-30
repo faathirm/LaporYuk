@@ -1,6 +1,11 @@
 <?php 
+    session_start();
     include('inc/start_page.php');
     include('inc/header.php');
+
+    if(isset($_SESSION['loggedin'])){
+        echo '<script>window.location.href = "admin.php";</script>';
+    }else{
 ?>
     <div class="page-banner"></div>
     <div class="page-breadcrumb container-fluid no-padding">
@@ -21,7 +26,7 @@
 				<div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="contact-form">
-						<form class="form-style-3 row" action="admin.php" method="POST">
+						<form class="form-style-3 row" action="proses/proseslogin.php" method="POST">
                             <div class="col-md-12 text-center">
                                 <h2>LOGIN PANEL</h2>
                                 <hr>
@@ -46,7 +51,8 @@
         
 	</main>
 
-<?php 
+<?php
+    }
     include('inc/footer.php');
     include('inc/page_end.php');     
 ?>

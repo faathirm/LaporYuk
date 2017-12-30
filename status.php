@@ -48,7 +48,14 @@
                                 <div class="panel-heading" role="tab" id="headingTwo<?php echo $nomor;?>">
                                     <h4 class="panel-title">
                                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2_1" href="#collapseTwo<?php echo $nomor;?>" aria-expanded="true">
-                                            <strong><?php echo $data['nopol']; ?></strong> | <?php echo $data['tanggaldilaporkan'];?> | <span class="label label-primary"><?php echo $data['status']; ?></span>
+                                            <strong><?php echo $data['nopol']; ?></strong> | <?php echo $data['tanggaldilaporkan'];?> | 
+                                            <?php if($data['status'] == "TAHAP 4"){
+                                                ?> <span class="label label-success">TAHAP 4</span> <?php
+                                            }else if($data['status'] == "DITOLAK"){
+                                                ?> <span class="label label-danger">DITOLAK</span> <?php
+                                            }else{
+                                                ?><?php echo $data['status']; ?><?php
+                                            }?>
                                         </a>
                                     </h4>
                                 </div>
@@ -65,7 +72,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <h5>Komentar</h5>
-                                                <p>heheheheheheheh</p>
+                                                <?php echo $data['komentar'];?>
                                             </div>
                                         </div>
                                     </div>

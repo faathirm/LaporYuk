@@ -26,8 +26,8 @@ if(!empty($lokasi_file)){
     if(!$input){
         echo 'Gagal Menambahkan';
     }else{
-        //echo '<script>window.location.href = "index.php";</script>';
-        echo 'berhasil';
+        echo '<script>window.location.href = "../index.php";</script>';
+        //echo 'berhasil';
     }
   
 }else{
