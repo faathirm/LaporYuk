@@ -109,7 +109,7 @@
                                 </select>
                             </div>
 							<div class="form-group">
-								<textarea name="komentar" placeholder="KOMENTAR" rows="4" class="form-control"></textarea>
+								<textarea name="komentar" placeholder="KOMENTAR" rows="4" class="form-control"> <?php echo $data['komentar']; ?> </textarea>
 							</div>
 							<button type="submit" title="Button">Submit</button>
 						</form>
