@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<title>"NAMANYA"</title>
+	<title>LaporYuk</title>
 
 	<!-- Standard Favicon -->
 	<link rel="icon" type="image/x-icon" href="images/favicon.png" />

@@ -27,19 +27,23 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a href="index.php" class="navbar-brand">"NAMANYA"</a>
+						<a href="index.php" class="navbar-brand">laporyuk</a>
 					</div>
 					<!-- Menu Icon -->
 					<div class="menu-icon">
 						<!--div class="burger-menu">
 							<a href="#" title="menu"><img src="images/burger-menu-ic.png" alt="Menu" /></a>
 						</div-->
+                        
 					</div><!-- Menu Icon /- -->
 					<div class="navbar-collapse collapse navbar-right" id="navbar">
 						<ul class="nav navbar-nav">
                             <li>
 								<a href="index.php" role="button">Home</a>
 							</li>
+                            <li>
+                                <a href="#" id="search" title="Search">Cek Nomor Kendaraan</a>
+                            </li>
 							<li>
 								<a href="contact.php" role="button">Contacts</a>
 							</li>
@@ -50,6 +54,12 @@
 					</div><!--/.nav-collapse -->
 				</nav><!-- nav /- -->
 				<!-- Search Box -->
+                <div class="search-box">
+					<span><i class="icon_close"></i></span>
+					<form action="ceknomor.php">
+                        <input type="text" class="form-control" name="nopol" placeholder="Cek Nomor Kendaraan ( B 1234 ABC ) dan tekan enter" />
+                    </form>
+				</div><!-- Search Box /- -->
 			</div><!-- Container /- -->
 		</div><!-- Menu Block /- -->
 		
