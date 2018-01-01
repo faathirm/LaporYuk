@@ -31,9 +31,9 @@ if(!empty($lokasi_file)){
     if(!$input){
         echo 'Gagal Menambahkan';
     }else{
-        //echo '<script>window.location.href = "../index.php";</script>';
-        echo 'berhasil';
-        echo ("$nama_file.$extension");
+        echo '<script>window.location.href = "../index.php";</script>';
+        //echo 'berhasil';
+        //echo ("$nama_file.$extension");
     }
   
 }else{

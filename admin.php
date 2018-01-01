@@ -1,7 +1,5 @@
 <?php 
 
-    session_start();
-
     include('inc/start_page.php');
     include('inc/header.php');
     include('proses/koneksi.php');
@@ -103,7 +101,6 @@
                                             <li><?php echo $tahap3;?>  Laporan Tahap 3</li>
                                             <li><?php echo $tahap4;?>  Laporan Tahap 4</li>
                                             <li><?php echo $ditolak;?>  Laporan Di Tolak</li>
-                                            <li><a class="label label-danger" href="proses/logout.php">LOGOUT</a></li>
                                         </ul>
                                     </div>
                                     <div class="shape"></div>

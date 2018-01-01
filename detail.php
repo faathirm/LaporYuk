@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     include('inc/start_page.php');
     include('inc/header.php');
     include('proses/koneksi.php');

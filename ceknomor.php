@@ -4,7 +4,7 @@
     include('proses/koneksi.php');
 
     if (empty($_GET)){
-        //echo '<script>window.location.href = "index.php";</script>';
+        echo '<script>window.location.href = "index.php";</script>';
     }else{
         $nopol = $_GET['nopol']; 
     
@@ -35,7 +35,7 @@
 		<div class="padding-50"></div>
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2 table-style">
+                <div class="col-md-8 col-md-offset-2 table-style table-responsive">
                     <table class="table table-style-4 table-bordered">
 						<thead>
 							<tr>

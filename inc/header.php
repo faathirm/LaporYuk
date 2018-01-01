@@ -1,3 +1,7 @@
+<?php 
+session_start();
+?>
+
 <body data-offset="200" data-spy="scroll" data-target=".ow-navigation">
 <div class="main-box">
 	<a id="top"></a>
@@ -10,7 +14,17 @@
 		<div class="top-header container-fluid no-padding">
 			<!-- Container -->
 			<div class="container">
-				<p>Jl. Telekomunikasi No. 01 Bandung Jawa Barat</p>
+                <?php   
+                if(isset($_SESSION['loggedin'])){                    
+                    ?> <p>Jl. Telekomunikasi No. 01 Bandung Jawa Barat <span class="reg-link"><strong><?php echo $_SESSION['user'];?></strong><a href="admin.php" title="Dashboard">Dashboard</a> | <a href="proses/logout.php">LOGOUT</a></span></p> <?php   
+                }else if(isset($_SESSION['userlogin'])){
+                    ?> <p>Jl. Telekomunikasi No. 01 Bandung Jawa Barat <span class="reg-link"><strong><?php echo $_SESSION['user'];?></strong><a href="dashboard.php" title="Dashboard">Dashboard</a> | <a href="proses/logout.php">LOGOUT</a></span></p> <?php
+                }else{
+                    ?> <p>Jl. Telekomunikasi No. 01 Bandung Jawa Barat <span class="reg-link"><a href="login.php" title="Login">Login</a> or <a href="register.php" title="Register">register</a></span></p> <?php      
+                } 
+                
+                ?>
+                
 			</div><!-- Container /- -->
 		</div><!-- Top Header /- -->
 	
@@ -42,14 +56,11 @@
 								<a href="index.php" role="button">Home</a>
 							</li>
                             <li>
-                                <a href="#" id="search" title="Search">Cek Nomor Kendaraan</a>
-                            </li>
-							<li>
-								<a href="contact.php" role="button">Contacts</a>
+								<a href="contact.php" role="button">Contact</a>
 							</li>
                             <li>
-								<a href="login.php" role="button">Login</a>
-							</li>
+                                <a href="#" id="search" title="Search">Cek Nomor Kendaraan</a>
+                            </li>
 						</ul>
 					</div><!--/.nav-collapse -->
 				</nav><!-- nav /- -->
