@@ -4,15 +4,18 @@
     include('proses/koneksi.php');
 
     if(!isset($_SESSION['loggedin'])){
-        echo '<script>window.location.href = "login.php";</script>';
+        $_SESSION["error_msg"] = "Login terlebih dahulu";
+         echo '<script>window.location.href = "login.php";</script>';
     }else{
     
     if (empty($_GET)){
         echo '<script>window.location.href = "admin.php";</script>';
     }else{
-
+    
+    $userid = $_SESSION['id'];
+    $row = mysql_fetch_assoc(mysql_query("SELECT * FROM data_user WHERE id='$userid'"));    
     $id = $_GET['id'];
-
+    
     $show = mysql_query("SELECT * FROM data_laporan WHERE id='$id'");
     $data = mysql_fetch_assoc($show);
     
@@ -66,10 +69,10 @@
                     <div class="col-md-4 list-section">
                         <ul class="bullets-square">
                             <h4>DATA DIRI</h4>
-							<li><?php echo $data['namapelapor'];?></li>
-							<li><?php echo $data['email'];?></li>
-							<li><?php echo $data['nomortelepon'];?></li>
-							<li><?php echo $data['bank'];?> / <?php echo $data['nomorrekening'];?></li><hr>
+							<li><?php echo $row['namadepan']." ".$row['namabelakang'];?></li>
+							<li><?php echo $row['email'];?></li>
+							<li><?php echo $row['nomortelepon'];?></li>
+							<li><?php echo $row['bank'];?> / <?php echo $row['rekening'];?></li><hr>
                             <h4>STATUS 
                                 <?php if($data['status'] == "TAHAP 4"){
                                     ?><label class="label label-success">TAHAP 4</label><?php

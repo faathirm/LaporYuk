@@ -6,7 +6,8 @@
     
     
     if(!isset($_SESSION['loggedin'])){
-        echo '<script>window.location.href = "login.php";</script>';
+        $_SESSION["error_msg"] = "Login terlebih dahulu";
+         echo '<script>window.location.href = "login.php";</script>';
     }else{
     
     $per_page = 5;

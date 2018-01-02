@@ -2,6 +2,7 @@
 	
 	<!-- JQuery v1.11.3 -->
 	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap-auto-dismiss-alert.js"></script>
 	<script src="libraries/tweecool.js"></script>
 	<!-- Library JS -->
 	<script src="libraries/lib.js"></script>

@@ -4,13 +4,14 @@
     include('proses/koneksi.php');
 
      if(!isset($_SESSION['userlogin'])){
-        echo '<script>window.location.href = "login.php";</script>';
+         $_SESSION["error_msg"] = "Login terlebih dahulu";
+         echo '<script>window.location.href = "login.php";</script>';
     }else{
-        $email = $_SESSION['email'];
+        $userid = $_SESSION['id'];
         //ambil data user
-        $row = mysql_fetch_assoc(mysql_query("SELECT * FROM data_user WHERE email='$email'"));
+        $row = mysql_fetch_assoc(mysql_query("SELECT * FROM data_user WHERE id='$userid'"));
         //ambil data laporan
-        $sql = "SELECT * FROM data_laporan WHERE email='$email'";
+        $sql = "SELECT * FROM data_laporan WHERE userid='$userid'";
         $baris = mysql_fetch_assoc(mysql_query($sql));
         $query = mysql_query($sql);
     
@@ -20,23 +21,43 @@
 			<div class="container">
 				<ol class="breadcrumb">
 					<li><a href="index.php" title="Home">Home</a></li>
-					<li><a href="status.php">Status</a></li>
+					<li><a href="dashboard.php">Dashboard</a></li>
+					<li>User ID #<?php echo $userid; ?> </li>
 				</ol>
 			</div>
 		</div><!-- Breadcrumb /- -->
 		<!-- Contact Form -->
 	<main>
 		<div class="padding-50"></div>
-        <div class="container">
+        <div class="container alert-section">
             <div class="row">
                 <div class="col-md-8">
+                    
+                    <?php if(!empty($_SESSION["success_msg"])):?>
+                    <div class="alerts-style-3">
+                        <div role="alert" class="alert alert-success text-center" data-auto-dismiss="4000"> 
+                            <i class="fa fa-check" aria-hidden="true"></i><?php echo $_SESSION['success_msg'];?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <?php unset($_SESSION["success_msg"]); endif;?>
+                    
+                    <?php if(!empty($_SESSION["error_msg"])):?>
+                    <div class="alerts-style-3">
+                        <div role="alert" class="alert alert-danger text-center" data-auto-dismiss="4000">
+                            <i class="fa fa-times" aria-hidden="true"></i><?php echo $_SESSION['error_msg'];?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-auto-dismiss="4000"></button>
+                        </div>
+                    </div>
+                    <?php unset($_SESSION["error_msg"]); endif;?>
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <div class="info-boxes">
                                 <div class="info-content-3">
 								<h3>Tambah Laporan Baru</h3>
 								<p>Laporkan sekarang dan dapatkan pendapatan!</p>
-								<a href="#" class="small-btn btn-block" title="Small Button"><i class="fa fa-plus" aria-hidden="true"></i>Buat Laporan Baru</a>
+								<a href="daftar.php" class="small-btn btn-block" title="Small Button"><i class="fa fa-plus" aria-hidden="true"></i>Buat Laporan Baru</a>
 							 </div>
                             </div>
                         </div>
@@ -99,7 +120,11 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <h5>Komentar</h5>
-                                                <?php echo $data['komentar'];?>
+                                                <?php if($data['komentar'] == ""){
+                                                    echo '<strong>Belum Ada Komentar</strong>';
+                                                }else{
+                                                    echo $data['komentar'];
+                                                }?>
                                             </div>
                                         </div>
                                     </div>
@@ -126,11 +151,13 @@
                                             <li><?php echo $row['nomortelepon'] ?></li>
                                             <?php
                                             if($row['bank'] == ""){
-                                                ?> <li><a href="#" class="label label-default">TAMBAH REKENING</a></li> <?php
+                                                ?> <li><a data-toggle="modal" data-target="#tambahrekening" class="label label-default"><i class="fa fa-plus"></i> TAMBAH REKENING</a></li> <?php
                                             }else{
-                                                ?> <li><?php echo $row['bank']; ?> / <?php echo substr($row['rekening'],0,-3);?>XXX</li> <?php
+                                                ?> <li><?php echo $row['bank']; ?> / <?php echo substr($row['rekening'],0,-3);?>XXX</li> 
+                                            <?php
                                             }
                                             ?>
+                                            <li><a class="label label-default"><i class="fa fa-gear"></i> Account Setting</a></li>
                                         </ul>
                                     </div>
                                     <div class="shape"></div>
@@ -139,6 +166,47 @@
                         </div><!-- Row /- -->
                     </div><!-- Ribbon Holder 4 -->
 				</div>
+            </div>
+        </div>
+        
+        <div id="tambahrekening" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="contact-form ">
+                            <form class="form-style-3 row" action="proses/prosestambahrekening.php" method="post">
+                                <div class="form-group col-md-8 col-md-offset-2">
+                                    <h4><strong>Tambahkan nomor rekening untuk menerima pembayaran anda !</strong></h4>
+                                    <hr>
+                                </div>
+                                <div class="form-group col-md-8 col-md-offset-2">
+                                    <select name="bank" class="form-control">
+                                        <option value="MANDIRI">MANDIRI</option>
+                                        <option value="BCA">BCA</option>
+                                        <option value="BNI">BNI</option>
+                                        <option value="BRI">BRI</option>
+                                        <option value="BTPN">BTPN</option>
+                                        <option value="DANAMON">DANAMON</option>
+                                    </select>
+                                    <span class="pull-right">Pilih bank yang anda gunakan</span>
+                                </div>
+                                <div class="form-group col-md-8 col-md-offset-2">
+                                    <input type="text" class="form-control" name="rekening" placeholder="Nomor Rekening..">
+                                    <span class="pull-right">Nomor rekening anda</span>
+                                </div>
+                                <div class="form-group col-md-8 col-md-offset-2">
+                                    <input type="hidden" name="id" value=" <?php echo $_SESSION['id']; ?> ">
+                                    <button type="submit" title="Tambahkan Rekening" class="btn btn-lg">Tambahkan Rekening</button>
+                                </div>
+                            </form>
+                        </div>                                
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
         

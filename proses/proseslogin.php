@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include('koneksi.php');
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -28,10 +30,12 @@ include('koneksi.php');
         $_SESSION['userlogin'] = true;
         $_SESSION['id']= $user['id'];
         $_SESSION['user'] = $user['namadepan'];
+        $_SESSION['namabelakang'] = $user['namabelakang'];
         $_SESSION['email'] = $user['email'];
         header("location:../dashboard.php");
     }else{
-        header("location:../login.php");    
+        $_SESSION["error_msg"] = "Belum Terdaftar";
+        header("Location:../login.php");
     }
 
 

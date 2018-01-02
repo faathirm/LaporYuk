@@ -2,10 +2,7 @@
     
 include('koneksi.php');
 $namapelapor = $_POST['namapelapor'];
-$nomortelepon = $_POST['nomortelepon'];
-$email = $_POST['email'];
-$bank = $_POST['bank'];
-$nomorrekening = $_POST['nomorrekening'];
+$userid = $_POST['userid'];
 $nopol = strtoupper($_POST['nopol']);
 $detail = $_POST['detail'];
 $tanggalkejadian = strtoupper($_POST['tanggalkejadian']);
@@ -26,12 +23,12 @@ $direktori   = "../images/fotoupload/$nama_file.$extension";
 if(!empty($lokasi_file)){
     move_uploaded_file($lokasi_file,$direktori);
     
-    $input = mysql_query("INSERT INTO data_laporan VALUES('','$namapelapor','$nomortelepon','$email','$bank','$nomorrekening','$nopol','$detail','$tanggalkejadian','$jamkejadian','$nama_file.$extension','$tanggaldilaporkan','$status','')");
+    $input = mysql_query("INSERT INTO data_laporan VALUES('','$namapelapor','$userid','$nopol','$detail','$tanggalkejadian','$jamkejadian','$nama_file.$extension','$tanggaldilaporkan','$status','')");
 
     if(!$input){
         echo 'Gagal Menambahkan';
     }else{
-        echo '<script>window.location.href = "../index.php";</script>';
+        echo '<script>window.location.href = "../dashboard.php";</script>';
         //echo 'berhasil';
         //echo ("$nama_file.$extension");
     }

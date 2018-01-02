@@ -53,7 +53,7 @@
 						<form class="form-style-4 row" action="daftar.php" method="POST">
                             <div class="col-md-12 text-center">
                                 <h2>Daftarkan Laporanmu Sekarang!</h2>
-                                <small>Daftar dengan email sekarang, dan terima bayaran dari laporan yang kamu buat!</small>
+                                <small>Buat akun sekarang dan terima bayaran dari laporan yang kamu buat!</small>
                                 <div class="padding-20"></div>
                             </div>
 							<div class="form-group col-md-10 col-sm-10 col-xs-12">
