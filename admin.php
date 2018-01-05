@@ -1,4 +1,4 @@
-<?php 
+    <?php 
 
     include('inc/start_page.php');
     include('inc/header.php');
@@ -40,9 +40,30 @@
 		<!-- Slider Section -->   
 		<div class="padding-50"></div>
 		<!-- Process Section /- -->
-		<div class="container-fluid no-padding">
+		<div class="container-fluid no-padding alert-section">
 			<div class="container">
 				<div class="row">
+                    <div class="col-md-8">
+                    
+                    <?php if(!empty($_SESSION["success_msg"])):?>
+                    <div class="alerts-style-3">
+                        <div role="alert" class="alert alert-success text-center" data-auto-dismiss="4000"> 
+                            <i class="fa fa-check" aria-hidden="true"></i><?php echo $_SESSION['success_msg'];?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <?php unset($_SESSION["success_msg"]); endif;?>
+                    
+                    <?php if(!empty($_SESSION["error_msg"])):?>
+                    <div class="alerts-style-3">
+                        <div role="alert" class="alert alert-danger text-center" data-auto-dismiss="4000">
+                            <i class="fa fa-times" aria-hidden="true"></i><?php echo $_SESSION['error_msg'];?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-auto-dismiss="4000"></button>
+                        </div>
+                    </div>
+                    <?php unset($_SESSION["error_msg"]); endif;?>
+                        
+                    </div>
                     <div class="table-style col-md-8">
                         <h2>Laporan</h2><hr>
                         <table class="table table-style-4 table-bordered">

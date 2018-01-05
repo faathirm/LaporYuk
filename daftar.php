@@ -38,10 +38,10 @@
                                     <textarea placeholder="Detail Laporan" name="detail" rows="4" class="form-control" data-toggle="tooltip" title="Penjelasan detail mengenai kejadian pelanggaran"></textarea>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <input type="text" name="tanggalkejadian" required="" placeholder="Tanggal Kejadian" class="form-control" data-toggle="tooltip" title="Contoh : 1 Januari 2018">
+                                    <input type="date" name="tanggalkejadian" required="" placeholder="Tanggal Kejadian" class="form-control" data-toggle="tooltip" title="Contoh : 01/01/2018">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <input type="text" name="jamkejadian" required="" placeholder="Jam Kejadian" class="form-control" data-toggle="tooltip" title="Contoh : 15:45">
+                                    <input type="time" name="jamkejadian" required="" placeholder="Jam Kejadian" class="form-control" data-toggle="tooltip" title="Contoh : 15:45 PM">
                                 </div>
                                 
                                 <div class="form-group col-md-4">

@@ -12,6 +12,9 @@
         $row = mysql_fetch_assoc(mysql_query("SELECT * FROM data_user WHERE id='$userid'"));
         //ambil data laporan
         $sql = "SELECT * FROM data_laporan WHERE userid='$userid'";
+        $tampil = "SELECT * FROM data_withdrawl WHERE iduser='$userid'";
+        $queryy = mysql_query($tampil);
+         
         $baris = mysql_fetch_assoc(mysql_query($sql));
         $query = mysql_query($sql);
     
@@ -67,7 +70,7 @@
 								<h3>Pendapatan kamu</h3>
 								<h2 class="text-center"><strong><?php echo 'Rp. ' . number_format( $row['saldo'], 0 , '' , ',' ); ?></strong></h2>
                                 <p>Tarik pendapatan mu!</p>
-								<a href="#" class="small-btn btn-block" title="Small Button"><i class="fa fa-money" aria-hidden="true"></i>Tarik Dana</a>
+								<a data-toggle="modal" data-target="#tarikdana" href="" class="small-btn btn-block" title="Small Button"><i class="fa fa-money" aria-hidden="true"></i>Tarik Dana</a>
 							 </div>
                             </div>
                         </div>
@@ -157,7 +160,8 @@
                                             <?php
                                             }
                                             ?>
-                                            <li><a class="label label-default"><i class="fa fa-gear"></i> Account Setting</a></li>
+                                            <li><a data-toggle="modal" data-target="#statuspenarikan" class="label label-default"><i class="fa fa-check"></i> Status Penarikan</a></li>
+                                            <li><a class="label label-default"><i class="fa fa-gear"></i>  Pengaturan Akun</a></li>
                                         </ul>
                                     </div>
                                     <div class="shape"></div>
@@ -208,6 +212,88 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <div id="tarikdana" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><strong>Tarik Dana</strong></h4>   
+                    </div>
+                    <div class="modal-body">
+                        <div class="contact-form">
+                            <form class="form-style-3 row" action="proses/prosestarikdana.php" method="post">
+                                <div class="form-group col-md-8 col-md-offset-2">
+                                    <input type="number" class="form-control" name="permintaan" min="50000" max="<?php echo $row['saldo']; ?>" step="10000" placeholder="Minimal penarikan adalah Rp 50.000">
+                                    <small class="pull-right">Akan dikirimkan ke bank <?php echo $row['bank'];?> dengan nomor rekening <?php echo $row['rekening']; ?> </small>
+                                </div>
+                                <div class="form-group col-md-6 col-md-offset-3">
+                                    <input type="hidden" name="id" value=" <?php echo $_SESSION['id']; ?> ">
+                                    <button type="submit" title="Tambahkan Rekening" class="btn btn-lg">Tarik Dana</button>
+                                </div>
+                            </form>
+                        </div>                          
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="statuspenarikan" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Status Penarikan</h4>
+              </div>
+              <div class="modal-body">
+                <div class="table-style">
+                    <table class="table table-style-4 table-bordered">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Tanggal</th>
+								<th>Bank</th>
+								<th>Permintaan</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+                            $nomor = 1;
+                            while($tampil=mysql_fetch_assoc($queryy)){
+                            ?>
+							<tr>
+								<th scope="row"><?php echo $nomor; ?></th>
+								<td><?php echo $tampil['tanggal'];?></td>
+								<td><?php echo $tampil['bank'];?> / <?php echo $tampil['rekening'];?></td>
+								<td><?php echo 'Rp. ' . number_format( $tampil['permintaaan'], 0 , '' , ',' ); ?></td>
+								<td><?php if($tampil['status']=="0"){
+                                    echo 'Belum Di Transfer';
+                                }else{
+                                    echo '<strong>Sudah DI Transfer</strong>';
+                                } ?></td>
+							</tr>
+                            <?php
+                            $nomor++;
+                            }
+                            ?>
+						</tbody>
+					</table>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
         </div>
         
         

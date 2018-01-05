@@ -118,7 +118,7 @@
 			<div class="container">
 				<!-- Row -->
 				<div class="row">
-					<div class="col-md-8 col-sm-8 col-xs-12 quotes-section">
+					<div class="col-md-12 col-sm-12 col-xs-12 quotes-section">
 							<div class="block-title">
 								<h5>Siapa Kami</h5>
 							</div>
@@ -126,24 +126,6 @@
                             <p>Misi kami adalah dapat membuat para pelanggar jera dan bisa menggunakan jalan umum dengan bijak dan taat berlalu lintas.</p>
                             <p>Kami memberikan bayaran sebanyak 20% dari total denda yang harus dibayar oleh pelanggar kepada para pelapor yang telah disetujui.</p>
 					</div>
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div class="block-title">
-								<h5>Status Laporan</h5>
-				        </div>
-                        <div class="contact-form">
-						<form class="form-style-4 row" action="status.php" method="GET">
-							<div class="form-group col-md-12">
-								<input type="email" required="" placeholder="Email" class="form-control" name="email">
-							</div>
-                            <div class="form-group col-md-12">
-								<input type="text" required="" placeholder="Phone Number" class="form-control" name="nomortelepon">
-							</div>
-							<div class="form-group col-md-12">
-								<button type="submit" class="btn-block" title="Submit Button">Periksa</button>
-							</div>
-						</form>
-					</div>
-                    </div>
 				</div><!-- Row /- -->
                 <div class="row">
                     <div class="col-md-12">

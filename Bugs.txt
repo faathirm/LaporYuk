@@ -1,0 +1,9 @@
+LIST BUG
+- Admin belum bisa ubah status permintaan tarik dana user.
+- Saat cek nomor polisi, pada saat tidak ada datanya langsung kembali ke index tanpa pesan error.
+- Sosial Media pada contact belum dibuat.
+- Pada saat buat laporan tidak ada pesan berhasil/error.
+- Ada pesan error saat mengupdate detail laporan.
+- Terjadi error jika pelapor belum mengisi data bank tapi sudah melakukan penarikan dana/withdraw.
+- Ketika user login, posisi di dashboard lalu buka admin.php maka akan keluar pesan error login terlebih dahulu di
+dashboard.

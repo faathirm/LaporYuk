@@ -13,11 +13,14 @@
     }else{
     
     $userid = $_SESSION['id'];
-    $row = mysql_fetch_assoc(mysql_query("SELECT * FROM data_user WHERE id='$userid'"));    
+    
     $id = $_GET['id'];
     
     $show = mysql_query("SELECT * FROM data_laporan WHERE id='$id'");
     $data = mysql_fetch_assoc($show);
+    
+    $idpelapor = $data['userid'];
+    $row = mysql_fetch_assoc(mysql_query("SELECT * FROM data_user WHERE id='$idpelapor'"));    
     
     $kepilih1 ="";
     $kepilih2 ="";
@@ -44,7 +47,7 @@
 				<ol class="breadcrumb">
 					<li><a href="index.php" title="Home">Home</a></li>
 					<li><a href="admin.php" title="Admin">Admin</a></li>
-					<li><a href="detail.php">Detail</a></li>
+					<li>Detail</li>
 				</ol>
 			</div>
 		</div><!-- Breadcrumb /- -->
@@ -72,49 +75,52 @@
 							<li><?php echo $row['namadepan']." ".$row['namabelakang'];?></li>
 							<li><?php echo $row['email'];?></li>
 							<li><?php echo $row['nomortelepon'];?></li>
-							<li><?php echo $row['bank'];?> / <?php echo $row['rekening'];?></li><hr>
-                            <h4>STATUS 
-                                <?php if($data['status'] == "TAHAP 4"){
-                                    ?><label class="label label-success">TAHAP 4</label><?php
+							<li>Dilaporkan pada : <?php echo $data['tanggaldilaporkan'];?></li><hr>
+                            <h4><strong>STATUS</strong>
+                                <?php if($data['status'] == "TAHAP 3"){
+                                    ?><label class="label label-primary">TAHAP 3 / MENUNGGU PEMBAYARAN</label><?php
                                 }else if($data['status'] == "DITOLAK"){
                                     ?><label class="label label-danger">DITOLAK</label><?php
+                                }else if($data['status'] == "TAHAP 4"){
+                                    ?><label class="label label-success">TAHAP 4 / PEMBAYARAN DITERIMA</label><?php
                                 }else{
-                                    ?><label class="label label-default"><?php echo $data['status'];?></label><?php
+                                    ?><label class="label label-default"><?php echo $data['status'];?> / DIPROSES</label><?php
                                 }?>
-                                
-                                | POST <label class="label label-default"><?php echo $data['tanggaldilaporkan'];?></label> </h4>
+                            </h4>
 						</ul>
                         <div class="padding-20"></div>
                         <div class="contact-form">
-						<form class="form-style-1" action="proses/updatedata.php" method="POST">
-                            <div class="form-group">
-                                <input type="hidden" name="id" value="<?php echo $data['id'];?>" class="form-control">
-                            </div>
-                            <!--<input type="hidden" name="namapelapor" value="<?php echo $data['namapelapor']; ?>">
-                            <input type="hidden" name="nomortelepon" value="<?php echo $data['nomortelepon']; ?>">
-                            <input type="hidden" name="email" value="<?php echo $data['email']; ?>">
-                            <input type="hidden" name="bank" value="<?php echo $data['bank']; ?>">
-                            <input type="hidden" name="nomorrekening" value="<?php echo $data['nomorrekening']; ?>">
-                            <input type="hidden" name="nopol" value="<?php echo $data['nopol']; ?>">
-                            <input type="hidden" name="detail" value="<?php echo $data['detail']; ?>">
-                            <input type="hidden" name="tanggalkejadian" value="<?php echo $data['tanggalkejadian']; ?>">
-                            <input type="hidden" name="jamkejadian" value="<?php echo $data['jamkejadian']; ?>">
-                            <input type="hidden" name="tanggaldilaporkan" value="<?php echo $data['tanggaldilaporkan']; ?>">
-                            <input type="hidden" name="gambar" value="<?php echo $data['gambar']; ?>"> -->
-                            <div class="form-group">
-                                <select name="status" class="form-control">
-                                    <option value="TAHAP 1"<?php echo $kepilih1; ?>>TAHAP 1</option>
-                                    <option value="TAHAP 2"<?php echo $kepilih2; ?>>TAHAP 2</option>
-                                    <option value="TAHAP 3"<?php echo $kepilih3; ?>>TAHAP 3</option>
-                                    <option value="TAHAP 4"<?php echo $kepilih4; ?>>TAHAP 4</option>
-                                    <option value="DITOLAK"<?php echo $ditolak; ?>>DITOLAK</option>
-                                </select>
-                            </div>
-							<div class="form-group">
-								<textarea name="komentar" placeholder="KOMENTAR" rows="4" class="form-control"> <?php echo $data['komentar']; ?> </textarea>
-							</div>
-							<button type="submit" title="Button">Submit</button>
-						</form>
+						<?php if($data['status'] != "TAHAP 4"){
+                            ?> 
+                            
+                            <form class="form-style-1" action="proses/updatedata.php" method="POST">
+                                <div class="form-group">
+                                    <input type="hidden" name="id" value="<?php echo $data['id'];?>" class="form-control">
+                                    <input type="hidden" name="userid" value="<?php echo $data['userid'];?>" class="form-control">
+                                    <input type="hidden" name="saldoawal" value="<?php echo $row['saldo'];?>" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <?php if($data['status'] == "TAHAP 3"){
+                                        ?> <input class="form-control" type="text" name="saldo" placeholder="Total Pembayaran.."> <?php
+                                    }else{
+                                        ?> <select name="status" class="form-control">
+                                                <option value="TAHAP 1"<?php echo $kepilih1; ?>>TAHAP 1</option>
+                                                <option value="TAHAP 2"<?php echo $kepilih2; ?>>TAHAP 2</option>
+                                                <option value="TAHAP 3"<?php echo $kepilih3; ?>>TAHAP 3</option>
+                                                <option value="DITOLAK"<?php echo $ditolak; ?>>DITOLAK</option>
+                                            </select> <?php
+                                    } ?>    
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="komentar" placeholder="KOMENTAR" rows="4" class="form-control"> <?php echo $data['komentar']; ?> </textarea>
+                                </div>
+                                <button type="submit" title="Button">Submit</button>
+                            </form>
+                            
+                            <?php
+                        }else{
+                        
+                        }?>
 						<div class="padding-50"></div>
 					</div>
                     </div>

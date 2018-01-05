@@ -1,36 +1,41 @@
 <?php
 
+session_start();
 include('koneksi.php');
 
 $id = $_POST['id'];
-
-/*$namapelapor = $_POST['namapelapor'];
-$nomortelepon = $_POST['nomortelepon'];
-$email = $_POST['email'];
-$bank = $_POST['bank'];
-$nomorrekening = $_POST['nomorrekening'];
-$nopol = strtoupper($_POST['nopol']);
-$detail = $_POST['detail'];
-$tanggalkejadian = strtoupper($_POST['tanggalkejadian']);
-$jamkejadian = $_POST['jamkejadian'];
-$tanggaldilaporkan = $_POST['tanggaldilaporkan'];*/
-$status = $_POST['status'];
-//$gambar = $_POST['gambar'];
+$userid = $_POST['userid'];
 $komentar = $_POST['komentar'];
+$saldoawal = $_POST['saldoawal'];
 
-echo $id;
-echo $komentar;
-echo $status;
-
-//$update = mysql_query("UPDATE data_laporan set namapelapor='$namapelapor', nomortelepon='$nomortelepon', email='$email', bank='$bank', nomorrekening='$nomorrekening', nopol='$nopol', detail='$detail', tanggalkejadian='$tanggalkejadian', jamkejadian='$jamkejadian', tanggaldilaporkan='$tanggaldilaporkan', status='$status', gambar='$gambar', komentar='$komentar' WHERE id='$id'");
-
-$update = mysql_query("UPDATE data_laporan set status='$status', komentar='$komentar' WHERE id='$id'");
-
-if(!$update){
-    echo "gagal";
-}else{
-    //echo "berhasil";
-    echo '<script>window.location.href = "../admin.php";</script>';
+if(isset($_POST['status'])){
+    
+    $status = $_POST['status'];
+    $update = mysql_query("UPDATE data_laporan set status='$status', komentar='$komentar' WHERE id='$id'");
+    if(!$update){
+        $_SESSION["error_msg"] = "Gagal merubah status laporan";
+        echo '<script>window.location.href = "../admin.php";</script>';
+    }else{
+        $_SESSION["success_msg"] = "Berhasil merubah status laporan";
+        echo '<script>window.location.href = "../admin.php";</script>';
+    }
+}else if(isset($_POST['saldo'])){
+    
+    $saldo = $_POST['saldo'];
+    $saldoakhir = $saldo+$saldoawal;
+    $tahap = "TAHAP 4";
+    
+    //update saldo pada user
+    $tambahsaldo = mysql_query("UPDATE data_user set saldo='$saldoakhir' WHERE id='$userid'");
+    //update status pada data laporan
+    $updatelaporan = mysql_query("UPDATE data_laporan set status='$tahap', komentar='$komentar' WHERE id='$id'");
+    if($updatelaporan){
+        $_SESSION["success_msg"] = "Berhasil merubah status laporan";
+        echo '<script>window.location.href = "../admin.php";</script>';
+    }else{
+        $_SESSION["error_msg"] = "Gagal merubah status laporan";
+        echo '<script>window.location.href = "../admin.php";</script>';
+    }
 }
 
 ?>

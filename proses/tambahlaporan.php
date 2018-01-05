@@ -26,11 +26,11 @@ if(!empty($lokasi_file)){
     $input = mysql_query("INSERT INTO data_laporan VALUES('','$namapelapor','$userid','$nopol','$detail','$tanggalkejadian','$jamkejadian','$nama_file.$extension','$tanggaldilaporkan','$status','')");
 
     if(!$input){
-        echo 'Gagal Menambahkan';
-    }else{
+        $_SESSION["error_msg"] = "Gagal membuat laporan";
         echo '<script>window.location.href = "../dashboard.php";</script>';
-        //echo 'berhasil';
-        //echo ("$nama_file.$extension");
+    }else{
+        $_SESSION["success_msg"] = "Berhasil Membuat Laporan !";
+        echo '<script>window.location.href = "../dashboard.php";</script>';
     }
   
 }else{
